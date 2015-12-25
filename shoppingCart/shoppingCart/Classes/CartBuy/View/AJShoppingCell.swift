@@ -141,9 +141,12 @@ class AJShoppingCell: UITableViewCell {
     
     // MARK: - 按钮的点击事件
     //选择按钮的点击
-    @objc private  func chooseClick(btn: UIButton) {
-        btn.selected  = !btn.selected
-        addGoodArray?.selected = btn.selected
+    @objc private func chooseClick(button: UIButton) {
+        
+        button.selected  = !button.selected
+        addGoodArray?.selected = button.selected
+        
+// MARK: - 选择按钮的点击暂时有错误
         
         delegate?.shoppingCalculate()
     }
@@ -162,6 +165,7 @@ class AJShoppingCell: UITableViewCell {
         selectButton.setImage(UIImage(named: "check_n"), forState: UIControlState.Normal)
         selectButton.setImage(UIImage(named: "check_p"), forState: UIControlState.Selected)
         selectButton.addTarget(self, action: "chooseClick:", forControlEvents: UIControlEvents.TouchUpInside)
+        selectButton.sizeToFit()
         return selectButton
     }()
     

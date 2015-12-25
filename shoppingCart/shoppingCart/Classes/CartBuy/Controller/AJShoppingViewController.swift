@@ -38,6 +38,8 @@ class AJShoppingViewController: UIViewController {
         super.viewDidAppear(animated)
         //约束
         layoutUI()
+        
+        reCalculateGoodCount()
     }
     
     // MARK:- 设置UI
@@ -257,6 +259,7 @@ extension AJShoppingViewController {
         showCartTableView.reloadData()
     }
     
+    //全选商品按钮的点击
     @objc private func didSelectButton(btn:UIButton) {
         
         btn.selected = !btn.selected
@@ -267,6 +270,8 @@ extension AJShoppingViewController {
         
         //重新计算价格
         reCalculateGoodCount()
+        
+        showCartTableView.reloadData()
     }
 }
 
