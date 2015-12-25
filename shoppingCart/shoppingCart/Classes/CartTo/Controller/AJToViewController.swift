@@ -92,7 +92,7 @@ class AJToViewController: UIViewController {
     @objc private func cartClick () {
         
         let controller = AJShoppingViewController()
-        
+        controller.addGoodArray = addGoodArray
         //跳转控制器
         presentViewController(UINavigationController(rootViewController: controller), animated: true, completion: nil)
     }
