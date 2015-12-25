@@ -12,7 +12,7 @@ import UIKit
 let screenSize = UIScreen.mainScreen().bounds.size
 
 class AJToViewController: UIViewController {
-
+    
     
     // MARK: - 属性
     ///商品模型数组
@@ -20,7 +20,7 @@ class AJToViewController: UIViewController {
     
     ///商品列表cell的重用标识
     private let goodLinstCell = "AJToTableViewCell"
-
+    
     /// 已经添加进购物车的商品模型数组
     private var addGoodArray = [AJGoodModel]()
     
@@ -50,11 +50,10 @@ class AJToViewController: UIViewController {
         //添加view
         addUiView()
     }
-
+    
     //提示: 这个方法是当view已经显示后调用，我们在这里做view的约束比较准确
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-
         
         
         //约束子控件
@@ -63,7 +62,7 @@ class AJToViewController: UIViewController {
     
     //添加view
     func addUiView() {
-        navigationItem.title = "阿俊的购物车"
+        navigationItem.title = "商品列表"
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: cartBtn)
         //添加购物车
         navigationController?.navigationBar.addSubview(amontCart)
@@ -73,7 +72,7 @@ class AJToViewController: UIViewController {
         cartTableView.registerClass(AJToTableViewCell.self, forCellReuseIdentifier: goodLinstCell)
     }
     
-     //约束子控件
+    //约束子控件
     func layoutUI () {
         
         cartTableView.ff_AlignInner(type: ff_AlignType.TopLeft, referView: view, size: CGSize(width: screenSize.width  , height: screenSize.height))
@@ -87,11 +86,15 @@ class AJToViewController: UIViewController {
         }
     }
     
-
     
-    /// 购物车按键的触发事件
-    func cartClick () {
+    
+    /// 购物车按键的点击， model 到控制器
+    @objc private func cartClick () {
         
+        let controller = AJShoppingViewController()
+        
+        //跳转控制器
+        presentViewController(UINavigationController(rootViewController: controller), animated: true, completion: nil)
     }
     
     
@@ -99,10 +102,18 @@ class AJToViewController: UIViewController {
     
     ///显示购物车数量Label
     lazy var amontCart : UILabel = {
-       var label = UILabel()
+        var label = UILabel()
         label.textColor = UIColor.redColor()
+        label.backgroundColor = UIColor.whiteColor()
         label.text = "\(self.goodArray.count)"
         label.font = UIFont.systemFontOfSize(11)
+        //画一个圆圈
+        label.textAlignment = NSTextAlignment.Center
+        label.layer.cornerRadius = 7.5
+        label.layer.masksToBounds = true
+        label.layer.borderWidth = 1
+        label.layer.borderColor = UIColor.redColor().CGColor
+        label.hidden = true
         
         return label
     }()
@@ -110,7 +121,7 @@ class AJToViewController: UIViewController {
     ///当前的tableView
     lazy var cartTableView : UITableView = {
         var tableView = UITableView()
-       
+        
         tableView.rowHeight = 80
         tableView.delegate = self
         tableView.dataSource = self
@@ -120,7 +131,7 @@ class AJToViewController: UIViewController {
     
     ///购物车按钮
     lazy var cartBtn : UIButton =  {
-       var btn = UIButton()
+        var btn = UIButton()
         
         btn.setImage(UIImage(named: "button_cart"), forState: UIControlState.Normal)
         btn.addTarget(self, action: "cartClick", forControlEvents: UIControlEvents.TouchUpInside)
@@ -157,12 +168,125 @@ extension AJToViewController : UITableViewDelegate,UITableViewDataSource{
 extension AJToViewController : AJToTableViewCellDelegate {
     
     func clickTransmitData(cell: AJToTableViewCell, icon: UIImageView) {
-        print("cell的点击")
+        
+        guard let indexPath = cartTableView.indexPathForCell(cell) else {
+            //没有创建数据就直接返回
+            return
+        }
+        //获得当前的数据
+        let redata = goodArray[indexPath.row]
+        
+        //添加到已购买数组之中
+        addGoodArray.append(redata)
+        
+        //重新计算iconView的frame值
+        //获取当前行的frame值
+        var rect = cartTableView.rectForRowAtIndexPath(indexPath)
+        
+        rect.origin.y -= cartTableView.contentOffset.y
+        var headRect = icon.frame
+        headRect.origin.y = rect.origin.y + headRect.origin.y - 64
+        startAnimation(headRect, iconView: icon)
     }
-    
 }
 
-
+// MARK: - 商品图片抛入购物车的动画效果
+extension AJToViewController  {
+    
+    //开始动画
+    private func startAnimation(rect: CGRect ,iconView:UIImageView) {
+        if layer == nil {
+            //创建核心动画
+            layer = CALayer()
+            layer?.contents = iconView.layer.contents
+            layer?.contentsGravity = kCAGravityResizeAspectFill
+            layer?.bounds = rect
+            layer?.cornerRadius = CGRectGetHeight(layer!.bounds) * 0.5
+            layer?.masksToBounds = true
+            layer?.position = CGPoint(x: iconView.center.x, y: CGRectGetMaxY(rect))
+            UIApplication.sharedApplication().keyWindow?.layer.addSublayer(layer!)
+            path = UIBezierPath()
+            path?.moveToPoint(layer!.position)
+            path?.addQuadCurveToPoint(CGPoint(x: screenSize.width - 25, y: 35), controlPoint: CGPoint(x: screenSize.width * 0.5, y: 80))
+            
+        }
+        //组动画
+        groupAnimation()
+    }
+    
+    //组动画,侦动画抛入购物车，并且放大，缩小图层增加懂效果
+    private func groupAnimation() {
+        
+        // 开始动画禁用tableview交互
+        cartTableView.userInteractionEnabled = false
+        
+        // 帧动画
+        let animation = CAKeyframeAnimation(keyPath: "position")
+        animation.path = path!.CGPath
+        animation.rotationMode = kCAAnimationRotateAuto
+        
+        // 放大动画
+        let bigAnimation = CABasicAnimation(keyPath: "transform.scale")
+        bigAnimation.duration = 0.5
+        bigAnimation.fromValue = 1
+        bigAnimation.toValue = 2
+        bigAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+        
+        // 缩小动画
+        let smallAnimation = CABasicAnimation(keyPath: "transform.scale")
+        smallAnimation.beginTime = 0.5
+        smallAnimation.duration = 1.5
+        smallAnimation.fromValue = 2
+        smallAnimation.toValue = 0.3
+        smallAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        
+        // 组动画
+        let groupAnimation = CAAnimationGroup()
+        groupAnimation.animations = [animation, bigAnimation, smallAnimation]
+        groupAnimation.duration = 2
+        groupAnimation.removedOnCompletion = false
+        groupAnimation.fillMode = kCAFillModeForwards
+        groupAnimation.delegate = self
+        layer?.addAnimation(groupAnimation, forKey: "groupAnimation")
+    }
+    
+    /**
+     动画结束后做一些操作
+     */
+    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        
+        // 如果动画是我们的组动画，才开始一些操作
+        if anim == layer?.animationForKey("groupAnimation") {
+            
+            // 开启交互
+            cartTableView.userInteractionEnabled = true
+            
+            // 隐藏图层
+            layer?.removeAllAnimations()
+            layer?.removeFromSuperlayer()
+            layer = nil
+            
+            // 如果商品数大于0，显示购物车里的商品数量
+            if self.addGoodArray.count > 0 {
+                amontCart.hidden = false
+            }
+            
+            // 商品数量渐出
+            let goodCountAnimation = CATransition()
+            goodCountAnimation.duration = 0.25
+            amontCart.text = "\(self.addGoodArray.count)"
+            amontCart.layer.addAnimation(goodCountAnimation, forKey: nil)
+            
+            // 购物车抖动
+            let cartAnimation = CABasicAnimation(keyPath: "transform.translation.y")
+            cartAnimation.duration = 0.25
+            cartAnimation.fromValue = -5
+            cartAnimation.toValue = 5
+            cartAnimation.autoreverses = true
+            cartBtn.layer.addAnimation(cartAnimation, forKey: nil)
+        }
+    }
+}
 
 
 

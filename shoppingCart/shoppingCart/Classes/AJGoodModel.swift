@@ -9,11 +9,6 @@
 import UIKit
 
 class AJGoodModel: NSObject {
-//    dict["iconName"] = "goodicon_\(i)"
-//    dict["title"] = "\(i)commodity"
-//    dict["desc"] = "这是第\(i)个商品"
-//    dict["newPrice"] = "20\(i)"
-//    dict["oldPrice"] = "30\(i)"
     
     //是否已经加入购物车
     var alreadyAddShoppingCArt :Bool = false

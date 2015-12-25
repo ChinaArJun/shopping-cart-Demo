@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E26CAB11C2D4D21007F9A9A /* AJShoppingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E26CAB01C2D4D21007F9A9A /* AJShoppingViewController.swift */; };
 		6E3D38831C2D225E00BBA254 /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3D38751C2D225E00BBA254 /* Constraint.swift */; };
 		6E3D38841C2D225E00BBA254 /* ConstraintAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3D38761C2D225E00BBA254 /* ConstraintAttributes.swift */; };
 		6E3D38851C2D225E00BBA254 /* ConstraintDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3D38771C2D225E00BBA254 /* ConstraintDescription.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6E26CAB01C2D4D21007F9A9A /* AJShoppingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AJShoppingViewController.swift; sourceTree = "<group>"; };
 		6E3D38751C2D225E00BBA254 /* Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constraint.swift; sourceTree = "<group>"; };
 		6E3D38761C2D225E00BBA254 /* ConstraintAttributes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintAttributes.swift; sourceTree = "<group>"; };
 		6E3D38771C2D225E00BBA254 /* ConstraintDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstraintDescription.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 		6E608E101C2CEA22005E14A5 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				6E26CAB01C2D4D21007F9A9A /* AJShoppingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				6E608E181C2CEA7A005E14A5 /* AJToViewController.swift in Sources */,
 				6E3D38851C2D225E00BBA254 /* ConstraintDescription.swift in Sources */,
 				6E3D38921C2D23E700BBA254 /* AJGoodModel.swift in Sources */,
+				6E26CAB11C2D4D21007F9A9A /* AJShoppingViewController.swift in Sources */,
 				6E3D38941C2D2AFE00BBA254 /* AJToTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
