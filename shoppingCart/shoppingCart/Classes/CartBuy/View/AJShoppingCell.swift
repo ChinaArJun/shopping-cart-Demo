@@ -11,6 +11,7 @@ import UIKit
 protocol AJShoppingCellDelegate : NSObjectProtocol {
     
     func shopping(shopping:AJShoppingCell ,button: UIButton ,label: UILabel)
+//    func shoppingCalculate(CellBtn:UIButton)
     func shoppingCalculate()
 }
 
@@ -21,7 +22,7 @@ class AJShoppingCell: UITableViewCell {
     var addGoodArray : AJGoodModel? {
         didSet {
             //为当前子属性赋值
-            selectButton.selected = addGoodArray!.alreadyAddShoppingCArt
+//            selectButton.selected = addGoodArray!.alreadyAddShoppingCArt
             
             amountLabel.text = "\(addGoodArray!.count)"
             
@@ -141,14 +142,17 @@ class AJShoppingCell: UITableViewCell {
     
     // MARK: - 按钮的点击事件
     //选择按钮的点击
-    @objc private func chooseClick(button: UIButton) {
+    @objc private func chooseClick(CellBtn: UIButton) {
         
-        button.selected  = !button.selected
-        addGoodArray?.selected = button.selected
+        print("1111:\(CellBtn.selected)--- \(!CellBtn.selected)")
+        CellBtn.selected  = !CellBtn.selected
+        print("2222:\(CellBtn.selected)--- \(!CellBtn.selected)")
+        
+        addGoodArray?.selected = CellBtn.selected
         
 // MARK: - 选择按钮的点击暂时有错误
-        
         delegate?.shoppingCalculate()
+//        delegate?.shoppingCalculate(button:button)
     }
     
     //商品数量按钮的点击
@@ -157,6 +161,7 @@ class AJShoppingCell: UITableViewCell {
         delegate?.shopping(self, button: btn, label: amountLabel)
         
     }
+    
     
     // MARK: - 数据懒加载
     ///选择按钮
@@ -168,6 +173,9 @@ class AJShoppingCell: UITableViewCell {
         selectButton.sizeToFit()
         return selectButton
     }()
+    
+    
+    
     
     ///商品图片
     private lazy var iconView: UIImageView = {

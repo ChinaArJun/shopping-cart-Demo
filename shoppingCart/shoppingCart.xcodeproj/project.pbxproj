@@ -50,7 +50,6 @@
 		6E3D38821C2D225E00BBA254 /* ViewController+SnapKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ViewController+SnapKit.swift"; sourceTree = "<group>"; };
 		6E3D38911C2D23E700BBA254 /* AJGoodModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AJGoodModel.swift; sourceTree = "<group>"; };
 		6E3D38931C2D2AFE00BBA254 /* AJToTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AJToTableViewCell.swift; sourceTree = "<group>"; };
-		6E608DF91C2CE728005E14A5 /* shoppingCart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = shoppingCart.app; path = "/Users/amo1994/快盘新/SVN momo/shopping-cart/shoppingCart/build/Debug-iphoneos/shoppingCart.app"; sourceTree = "<absolute>"; };
 		6E608DFC1C2CE728005E14A5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6E608E031C2CE728005E14A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6E608E061C2CE728005E14A5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -59,6 +58,7 @@
 		6E608E1A1C2D0315005E14A5 /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
 		6EB6C8A71C2D6EE90072A2E2 /* AJShoppingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AJShoppingCell.swift; sourceTree = "<group>"; };
 		6EB6C8A91C2D99030072A2E2 /* AJPriceLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AJPriceLabel.swift; sourceTree = "<group>"; };
+		6EC2726A1C2E1CAD00C904AD /* shoppingCart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shoppingCart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				6E608DFB1C2CE728005E14A5 /* shoppingCart */,
+				6EC2726A1C2E1CAD00C904AD /* shoppingCart.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,8 +114,8 @@
 			children = (
 				6E608E0E1C2CEA22005E14A5 /* Classes */,
 				6E608DFC1C2CE728005E14A5 /* AppDelegate.swift */,
-				6E608E031C2CE728005E14A5 /* Assets.xcassets */,
 				6E608E051C2CE728005E14A5 /* LaunchScreen.storyboard */,
+				6E608E031C2CE728005E14A5 /* Assets.xcassets */,
 				6E608E081C2CE728005E14A5 /* Info.plist */,
 			);
 			path = shoppingCart;
@@ -226,7 +227,7 @@
 			);
 			name = shoppingCart;
 			productName = shoppingCart;
-			productReference = 6E608DF91C2CE728005E14A5 /* shoppingCart.app */;
+			productReference = 6EC2726A1C2E1CAD00C904AD /* shoppingCart.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */

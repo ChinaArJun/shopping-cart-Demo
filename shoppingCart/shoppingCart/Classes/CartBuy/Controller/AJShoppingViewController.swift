@@ -64,7 +64,7 @@ class AJShoppingViewController: UIViewController {
         for model in addGoodArray! {
             if model.selected != true {
                 //只要有一个不等于就不全选中
-                buyButton.selected = false
+                selectButton.selected = false
                 break
             }
         }
@@ -229,6 +229,10 @@ extension AJShoppingViewController : AJShoppingCellDelegate {
         reCalculateGoodCount()
     }
     
+//    func shoppingCalculate(CellBtn: UIButton) {
+//        CellBtn.selected = selectButton.selected
+//    }
+    
     func shoppingCalculate() {
         reCalculateGoodCount()
     }
@@ -261,6 +265,8 @@ extension AJShoppingViewController {
     
     //全选商品按钮的点击
     @objc private func didSelectButton(btn:UIButton) {
+        
+//        shoppingCalculate(CellBtn)
         
         btn.selected = !btn.selected
         
