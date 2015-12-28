@@ -22,7 +22,7 @@ class AJShoppingCell: UITableViewCell {
     var addGoodArray : AJGoodModel? {
         didSet {
             //为当前子属性赋值
-//            selectButton.selected = addGoodArray!.alreadyAddShoppingCArt
+            selectButton.selected = addGoodArray!.selected
             
             amountLabel.text = "\(addGoodArray!.count)"
             
@@ -146,7 +146,7 @@ class AJShoppingCell: UITableViewCell {
         
         print("1111:\(CellBtn.selected)--- \(!CellBtn.selected)")
         CellBtn.selected  = !CellBtn.selected
-        print("2222:\(CellBtn.selected)--- \(!CellBtn.selected)")
+//        print("2222:\(CellBtn.selected)--- \(!CellBtn.selected)")
         
         addGoodArray?.selected = CellBtn.selected
         
