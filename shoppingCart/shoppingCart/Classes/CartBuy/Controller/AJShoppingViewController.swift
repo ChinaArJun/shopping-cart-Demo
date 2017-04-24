@@ -23,18 +23,18 @@ class AJShoppingViewController: UIViewController {
     var price: Float = 0.00
     
     //商品列表cell的重用标示符
-    private let shoppingCarCellIdntifier  = "shoppingCarCellIdntifier"
+    fileprivate let shoppingCarCellIdntifier  = "shoppingCarCellIdntifier"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.orangeColor()
+        self.view.backgroundColor = UIColor.orange
         
         //设置UI
         presentingUI()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         //约束
         layoutUI()
@@ -45,13 +45,13 @@ class AJShoppingViewController: UIViewController {
     // MARK:- 设置UI
     func presentingUI() {
         title = "阿俊购物车"
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.Plain, target: self, action: "clickBar")
-        view.backgroundColor = UIColor.whiteColor()
-        navigationItem.leftBarButtonItem?.tintColor = UIColor.orangeColor()
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.plain, target: self, action: "clickBar")
+        view.backgroundColor = UIColor.white
+        navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
         showCartTableView.rowHeight = 80
         
         //注册cell
-        showCartTableView.registerClass(AJShoppingCell.self, forCellReuseIdentifier: shoppingCarCellIdntifier)
+        showCartTableView.register(AJShoppingCell.self, forCellReuseIdentifier: shoppingCarCellIdntifier)
         
         //添加子控件
         view.addSubview(showCartTableView)
@@ -64,7 +64,7 @@ class AJShoppingViewController: UIViewController {
         for model in addGoodArray! {
             if model.selected != true {
                 //只要有一个不等于就不全选中
-                selectButton.selected = false
+                selectButton.isSelected = false
                 break
             }
         }
@@ -104,7 +104,7 @@ class AJShoppingViewController: UIViewController {
     
     //返回按钮的点击
     func clickBar () {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     
@@ -124,21 +124,21 @@ class AJShoppingViewController: UIViewController {
     //底部视图
     lazy var bottomView : UIView = {
         let bottomView = UIView()
-        bottomView.backgroundColor  = UIColor.whiteColor()
+        bottomView.backgroundColor  = UIColor.white
         return bottomView
     }()
     
     //底部多选、反选的按钮
     lazy var selectButton: UIButton = {
-        let selectButton = UIButton(type: UIButtonType.Custom)
-        selectButton.setImage(UIImage(named: "check_n"), forState: UIControlState.Normal)
-        selectButton.setImage(UIImage(named: "check_p"), forState: UIControlState.Selected)
-        selectButton.setTitle("多选\\反选", forState: UIControlState.Normal)
-        selectButton.setTitleColor(UIColor.grayColor(), forState: UIControlState.Normal)
-        selectButton.titleLabel?.font = UIFont.systemFontOfSize(12)
-        selectButton.addTarget(self, action: "didSelectButton:", forControlEvents: UIControlEvents.TouchUpInside)
+        let selectButton = UIButton(type: UIButtonType.custom)
+        selectButton.setImage(UIImage(named: "check_n"), for: UIControlState())
+        selectButton.setImage(UIImage(named: "check_p"), for: UIControlState.selected)
+        selectButton.setTitle("多选\\反选", for: UIControlState())
+        selectButton.setTitleColor(UIColor.gray, for: UIControlState())
+        selectButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        selectButton.addTarget(self, action: "didSelectButton:", for: UIControlEvents.touchUpInside)
         //默认是已经选择的状态
-        selectButton.selected = true
+        selectButton.isSelected = true
         selectButton.sizeToFit()
         
         return selectButton
@@ -148,7 +148,7 @@ class AJShoppingViewController: UIViewController {
     lazy var totalPriceLabel: UILabel = {
         let label = UILabel()
         let attributeText = NSMutableAttributedString(string: "总价格\(self.price)0")
-        attributeText.setAttributes([NSForegroundColorAttributeName:UIColor.redColor()], range: NSMakeRange(5, attributeText.length - 5))
+        attributeText.setAttributes([NSForegroundColorAttributeName:UIColor.red], range: NSMakeRange(5, attributeText.length - 5))
         
         label.attributedText = attributeText
         label.sizeToFit()
@@ -157,9 +157,9 @@ class AJShoppingViewController: UIViewController {
     
     //点击付款的按钮
     lazy var buyButton : UIButton = {
-        let button = UIButton(type: UIButtonType.Custom)
-        button.setTitle("付款", forState: UIControlState.Normal)
-        button.setBackgroundImage(UIImage(named: "button_add_cart"), forState: UIControlState.Normal)
+        let button = UIButton(type: UIButtonType.custom)
+        button.setTitle("付款", for: UIControlState())
+        button.setBackgroundImage(UIImage(named: "button_add_cart"), for: UIControlState())
         //裁剪
         button.layer.cornerRadius = 15
         button.layer.masksToBounds = true
@@ -173,19 +173,19 @@ class AJShoppingViewController: UIViewController {
 // tableView扩展
 extension AJShoppingViewController : UITableViewDelegate,UITableViewDataSource{
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //如果没有数据就为0行
         return addGoodArray!.count ?? 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(shoppingCarCellIdntifier, forIndexPath: indexPath) as! AJShoppingCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: shoppingCarCellIdntifier, for: indexPath) as! AJShoppingCell
         /*
         属性赋值时，我们发现需要需要再自定义一个tableViewCell来接收模型的数据
         cell.goodModel = addGoodArray![indexPath.row]
         */
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
         
         cell.addGoodArray = addGoodArray![indexPath.row]
         
@@ -200,10 +200,10 @@ extension AJShoppingViewController : UITableViewDelegate,UITableViewDataSource{
 extension AJShoppingViewController : AJShoppingCellDelegate {
     
     //商品数量按钮的点击
-    func shopping(shopping: AJShoppingCell, button: UIButton, label: UILabel) {
+    func shopping(_ shopping: AJShoppingCell, button: UIButton, label: UILabel) {
         
         //获得点击当前的cell
-        guard let indexPath = showCartTableView.indexPathForCell(shopping) else {
+        guard let indexPath = showCartTableView.indexPath(for: shopping) else {
             return
         }
         
@@ -217,12 +217,12 @@ extension AJShoppingViewController : AJShoppingCellDelegate {
                 return
             }
             
-            data.count--
+            data.count -= 1
             label.text = "\(data.count)"
             
         }else
         {
-            data.count++
+            data.count += 1
             label.text = "\(data.count)"
         }
         //重新计算总价格
@@ -241,7 +241,7 @@ extension AJShoppingViewController : AJShoppingCellDelegate {
 extension AJShoppingViewController {
     
     ///重新计算商品的数量
-    private func reCalculateGoodCount() {
+    fileprivate func reCalculateGoodCount() {
         //遍历模型
         for model in addGoodArray! {
             //计算选中的商品
@@ -254,7 +254,7 @@ extension AJShoppingViewController {
         //赋值价格
         let  attributeText = NSMutableAttributedString(string: "总共价格: \(self.price)0")
         
-            attributeText.setAttributes([NSForegroundColorAttributeName:UIColor.redColor()], range: NSMakeRange(5, attributeText.length - 5))
+            attributeText.setAttributes([NSForegroundColorAttributeName:UIColor.red], range: NSMakeRange(5, attributeText.length - 5))
         totalPriceLabel.attributedText = attributeText
         
         //清空price
@@ -264,14 +264,14 @@ extension AJShoppingViewController {
     }
     
     //全选商品按钮的点击
-    @objc private func didSelectButton(btn:UIButton) {
+    @objc fileprivate func didSelectButton(_ btn:UIButton) {
         
 //        shoppingCalculate(CellBtn)
         
-        btn.selected = !btn.selected
+        btn.isSelected = !btn.isSelected
         
         for model in addGoodArray! {
-            model.selected = btn.selected
+            model.selected = btn.isSelected
         }
         
         //重新计算价格

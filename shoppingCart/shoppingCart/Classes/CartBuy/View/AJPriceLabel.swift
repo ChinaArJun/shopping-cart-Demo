@@ -10,14 +10,14 @@ import UIKit
 
 class AJPriceLabel: UILabel {
 
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
         
         //获取上下文
         let ctx = UIGraphicsGetCurrentContext()
-        CGContextMoveToPoint(ctx, 0, rect.height * 0.5)
-        CGContextAddLineToPoint(ctx, rect.width, rect.height * 0.5)
-        CGContextStrokePath(ctx)
+        ctx?.move(to: CGPoint(x: 0, y: rect.height * 0.5))
+        ctx?.addLine(to: CGPoint(x: rect.width, y: rect.height * 0.5))
+        ctx?.strokePath()
     }
 
 }

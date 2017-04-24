@@ -38,11 +38,11 @@ class AJGoodModel: NSObject {
     init(dict: [String : AnyObject]) {
         super.init()
         //使用kvo为当前属性设置值
-        setValuesForKeysWithDictionary(dict)
+        setValuesForKeys(dict)
     }
     
     //防止kvo赋值属性不匹配二崩溃
-    override func setValue(value: AnyObject?, forUndefinedKey key: String) {}
+    override func setValue(_ value: Any?, forUndefinedKey key: String) {}
     
     
     

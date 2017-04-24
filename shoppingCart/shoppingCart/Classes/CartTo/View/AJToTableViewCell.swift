@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import SnapKit
 
 //使用代理传输数据
 protocol AJToTableViewCellDelegate :NSObjectProtocol {
     
     //代理方法
-    func clickTransmitData(cell:AJToTableViewCell ,icon: UIImageView)
+    func clickTransmitData(_ cell:AJToTableViewCell ,icon: UIImageView)
     
 }
 
@@ -36,7 +37,7 @@ class AJToTableViewCell: UITableViewCell {
             }
             
             //已经点击就禁用,防止cell的重用
-            addCarButton.selected = !goodModel!.alreadyAddShoppingCArt
+            addCarButton.isSelected = !goodModel!.alreadyAddShoppingCArt
             
             //重新布局
             layoutIfNeeded()
@@ -101,10 +102,10 @@ class AJToTableViewCell: UITableViewCell {
     
     
     /// 购买按键的点击  private私有方法
-    @objc private func addCarButtonClick(btn:UIButton) {
+    @objc fileprivate func addCarButtonClick(_ btn:UIButton) {
         goodModel!.alreadyAddShoppingCArt = true
         
-        btn.enabled = !goodModel!.alreadyAddShoppingCArt
+        btn.isEnabled = !goodModel!.alreadyAddShoppingCArt
         //传输值
         delegate?.clickTransmitData(self, icon: iconView)
         
@@ -112,7 +113,7 @@ class AJToTableViewCell: UITableViewCell {
     
     
     // MARK: - 属性懒加载
-    private lazy var iconView: UIImageView = {
+    fileprivate lazy var iconView: UIImageView = {
        let iconView = UIImageView()
         //圆角
         iconView.layer.cornerRadius = 30
@@ -122,26 +123,26 @@ class AJToTableViewCell: UITableViewCell {
     }()
     
     //商品标题
-    private lazy var titleLabel: UILabel = {
+    fileprivate lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         return titleLabel
     }()
     
     //商品描述
-    private lazy var descLabel: UILabel = {
+    fileprivate lazy var descLabel: UILabel = {
         let descLabel  = UILabel()
-        descLabel.textColor = UIColor.grayColor()
+        descLabel.textColor = UIColor.gray
        return descLabel
     }()
     
     //添加按钮
-    private lazy var addCarButton: UIButton = {
+    fileprivate lazy var addCarButton: UIButton = {
        
-        let addCarButton = UIButton(type: UIButtonType.Custom)
-        addCarButton.setBackgroundImage(UIImage(named: "button_add_cart"), forState: UIControlState.Normal)
-        addCarButton.setTitle("购买", forState: UIControlState.Normal)
+        let addCarButton = UIButton(type: UIButtonType.custom)
+        addCarButton.setBackgroundImage(UIImage(named: "button_add_cart"), for: UIControlState())
+        addCarButton.setTitle("购买", for: UIControlState())
         //按钮的点击事件
-        addCarButton.addTarget(self, action: "addCarButtonClick:", forControlEvents: UIControlEvents.TouchUpInside)
+        addCarButton.addTarget(self, action: "addCarButtonClick:", for: UIControlEvents.touchUpInside)
         return addCarButton
     }()
 

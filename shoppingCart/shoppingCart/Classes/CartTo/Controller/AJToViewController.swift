@@ -7,25 +7,26 @@
 //
 
 import UIKit
+import SnapKit
 
 //屏幕的size
-let screenSize = UIScreen.mainScreen().bounds.size
+let screenSize = UIScreen.main.bounds.size
 
-class AJToViewController: UIViewController {
+class AJToViewController: UIViewController,CAAnimationDelegate {
     
     
     // MARK: - 属性
     ///商品模型数组
-    private var goodArray = [AJGoodModel]()
+    fileprivate var goodArray = [AJGoodModel]()
     
     ///商品列表cell的重用标识
-    private let goodLinstCell = "AJToTableViewCell"
+    fileprivate let goodLinstCell = "AJToTableViewCell"
     
     /// 已经添加进购物车的商品模型数组
-    private var addGoodArray = [AJGoodModel]()
+    fileprivate var addGoodArray = [AJGoodModel]()
     
     ///贝塞尔曲线
-    private var path : UIBezierPath?
+    fileprivate var path : UIBezierPath?
     
     //自定义图层
     var layer: CALayer?
@@ -37,11 +38,11 @@ class AJToViewController: UIViewController {
         //初始化模型数组,制作一些假数据
         for i in 0..<10 {
             var dict = [String :AnyObject]()
-            dict["iconName"] = "goodicon_\(i)"
-            dict["title"] = "\(i)commodity"
-            dict["desc"] = "这是第\(i)个商品"
-            dict["newPrice"] = "20\(i)"
-            dict["oldPrice"] = "30\(i)"
+            dict["iconName"] = "goodicon_\(i)" as AnyObject
+            dict["title"] = "\(i)commodity" as AnyObject
+            dict["desc"] = "这是第\(i)个商品" as AnyObject
+            dict["newPrice"] = "20\(i)" as AnyObject
+            dict["oldPrice"] = "30\(i)" as AnyObject
             
             //将字典转模型并添加到数组中
             goodArray.append(AJGoodModel(dict:dict))
@@ -52,7 +53,7 @@ class AJToViewController: UIViewController {
     }
     
     //提示: 这个方法是当view已经显示后调用，我们在这里做view的约束比较准确
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         
@@ -66,16 +67,22 @@ class AJToViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: cartBtn)
         //添加购物车
         navigationController?.navigationBar.addSubview(amontCart)
-        navigationController?.navigationBar.barTintColor = UIColor.whiteColor()
+        navigationController?.navigationBar.barTintColor = UIColor.white
         self.view.addSubview(cartTableView)
         
-        cartTableView.registerClass(AJToTableViewCell.self, forCellReuseIdentifier: goodLinstCell)
+        cartTableView.register(AJToTableViewCell.self, forCellReuseIdentifier: goodLinstCell)
     }
     
     //约束子控件
     func layoutUI () {
         
-        cartTableView.ff_AlignInner(type: ff_AlignType.TopLeft, referView: view, size: CGSize(width: screenSize.width  , height: screenSize.height))
+//        cartTableView.ff_AlignInner(type: ff_AlignType.topLeft, referView: view, size: CGSize(width: screenSize.width  , height: screenSize.height))
+        cartTableView.snp.makeConstraints { (make) in
+            make.width.equalTo(screenSize.width);
+            make.height.equalTo(screenSize.height);
+            make.top.equalTo(self.view);
+            make.right.equalTo(self.view);
+        }
         amontCart.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
         
         amontCart.snp_makeConstraints { (make) -> Void in
@@ -89,12 +96,12 @@ class AJToViewController: UIViewController {
     
     
     /// 购物车按键的点击， model 到控制器
-    @objc private func cartClick () {
+    @objc fileprivate func cartClick () {
         
         let controller = AJShoppingViewController()
         controller.addGoodArray = addGoodArray
         //跳转控制器
-        presentViewController(UINavigationController(rootViewController: controller), animated: true, completion: nil)
+        present(UINavigationController(rootViewController: controller), animated: true, completion: nil)
     }
     
     
@@ -103,17 +110,17 @@ class AJToViewController: UIViewController {
     ///显示购物车数量Label
     lazy var amontCart : UILabel = {
         var label = UILabel()
-        label.textColor = UIColor.redColor()
-        label.backgroundColor = UIColor.whiteColor()
+        label.textColor = UIColor.red
+        label.backgroundColor = UIColor.white
         label.text = "\(self.goodArray.count)"
-        label.font = UIFont.systemFontOfSize(11)
+        label.font = UIFont.systemFont(ofSize: 11)
         //画一个圆圈
-        label.textAlignment = NSTextAlignment.Center
+        label.textAlignment = NSTextAlignment.center
         label.layer.cornerRadius = 7.5
         label.layer.masksToBounds = true
         label.layer.borderWidth = 1
-        label.layer.borderColor = UIColor.redColor().CGColor
-        label.hidden = true
+        label.layer.borderColor = UIColor.red.cgColor
+        label.isHidden = true
         
         return label
     }()
@@ -133,8 +140,8 @@ class AJToViewController: UIViewController {
     lazy var cartBtn : UIButton =  {
         var btn = UIButton()
         
-        btn.setImage(UIImage(named: "button_cart"), forState: UIControlState.Normal)
-        btn.addTarget(self, action: "cartClick", forControlEvents: UIControlEvents.TouchUpInside)
+        btn.setImage(UIImage(named: "button_cart"), for: UIControlState())
+        btn.addTarget(self, action: "cartClick", for: UIControlEvents.touchUpInside)
         btn.sizeToFit()
         
         return btn
@@ -144,15 +151,15 @@ class AJToViewController: UIViewController {
 // MARK: - UITableView数据源和代理方法
 extension AJToViewController : UITableViewDelegate,UITableViewDataSource{
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return goodArray.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //缓存池中创建cell
-        let cell = tableView.dequeueReusableCellWithIdentifier(goodLinstCell) as! AJToTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: goodLinstCell) as! AJToTableViewCell
         
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
         
         cell.goodModel = goodArray[indexPath.row]
         
@@ -167,9 +174,9 @@ extension AJToViewController : UITableViewDelegate,UITableViewDataSource{
 // MARK: - Cell点击的代理方法
 extension AJToViewController : AJToTableViewCellDelegate {
     
-    func clickTransmitData(cell: AJToTableViewCell, icon: UIImageView) {
+    func clickTransmitData(_ cell: AJToTableViewCell, icon: UIImageView) {
         
-        guard let indexPath = cartTableView.indexPathForCell(cell) else {
+        guard let indexPath = cartTableView.indexPath(for: cell) else {
             //没有创建数据就直接返回
             return
         }
@@ -181,7 +188,7 @@ extension AJToViewController : AJToTableViewCellDelegate {
         
         //重新计算iconView的frame值
         //获取当前行的frame值
-        var rect = cartTableView.rectForRowAtIndexPath(indexPath)
+        var rect = cartTableView.rectForRow(at: indexPath)
         
         rect.origin.y -= cartTableView.contentOffset.y
         var headRect = icon.frame
@@ -194,20 +201,20 @@ extension AJToViewController : AJToTableViewCellDelegate {
 extension AJToViewController  {
     
     //开始动画
-    private func startAnimation(rect: CGRect ,iconView:UIImageView) {
+    fileprivate func startAnimation(_ rect: CGRect ,iconView:UIImageView) {
         if layer == nil {
             //创建核心动画
             layer = CALayer()
             layer?.contents = iconView.layer.contents
             layer?.contentsGravity = kCAGravityResizeAspectFill
             layer?.bounds = rect
-            layer?.cornerRadius = CGRectGetHeight(layer!.bounds) * 0.5
+            layer?.cornerRadius = layer!.bounds.height * 0.5
             layer?.masksToBounds = true
-            layer?.position = CGPoint(x: iconView.center.x, y: CGRectGetMaxY(rect))
-            UIApplication.sharedApplication().keyWindow?.layer.addSublayer(layer!)
+            layer?.position = CGPoint(x: iconView.center.x, y: rect.maxY)
+            UIApplication.shared.keyWindow?.layer.addSublayer(layer!)
             path = UIBezierPath()
-            path?.moveToPoint(layer!.position)
-            path?.addQuadCurveToPoint(CGPoint(x: screenSize.width - 25, y: 35), controlPoint: CGPoint(x: screenSize.width * 0.5, y: 80))
+            path?.move(to: layer!.position)
+            path?.addQuadCurve(to: CGPoint(x: screenSize.width - 25, y: 35), controlPoint: CGPoint(x: screenSize.width * 0.5, y: 80))
             
         }
         //组动画
@@ -215,14 +222,14 @@ extension AJToViewController  {
     }
     
     //组动画,侦动画抛入购物车，并且放大，缩小图层增加懂效果
-    private func groupAnimation() {
+    fileprivate func groupAnimation() {
         
         // 开始动画禁用tableview交互
-        cartTableView.userInteractionEnabled = false
+        cartTableView.isUserInteractionEnabled = false
         
         // 帧动画
         let animation = CAKeyframeAnimation(keyPath: "position")
-        animation.path = path!.CGPath
+        animation.path = path!.cgPath
         animation.rotationMode = kCAAnimationRotateAuto
         
         // 放大动画
@@ -244,22 +251,23 @@ extension AJToViewController  {
         let groupAnimation = CAAnimationGroup()
         groupAnimation.animations = [animation, bigAnimation, smallAnimation]
         groupAnimation.duration = 2
-        groupAnimation.removedOnCompletion = false
+        groupAnimation.isRemovedOnCompletion = false
         groupAnimation.fillMode = kCAFillModeForwards
-        groupAnimation.delegate = self
-        layer?.addAnimation(groupAnimation, forKey: "groupAnimation")
+        groupAnimation.delegate = self ;
+        layer?.add(groupAnimation, forKey: "groupAnimation")
     }
     
     /**
      动画结束后做一些操作
      */
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+    
+    public func animationDidStop(_ anim: CAAnimation, finished flag: Bool){
         
         // 如果动画是我们的组动画，才开始一些操作
-        if anim == layer?.animationForKey("groupAnimation") {
+        if anim == layer?.animation(forKey: "groupAnimation") {
             
             // 开启交互
-            cartTableView.userInteractionEnabled = true
+            cartTableView.isUserInteractionEnabled = true
             
             // 隐藏图层
             layer?.removeAllAnimations()
@@ -268,14 +276,14 @@ extension AJToViewController  {
             
             // 如果商品数大于0，显示购物车里的商品数量
             if self.addGoodArray.count > 0 {
-                amontCart.hidden = false
+                amontCart.isHidden = false
             }
             
             // 商品数量渐出
             let goodCountAnimation = CATransition()
             goodCountAnimation.duration = 0.25
             amontCart.text = "\(self.addGoodArray.count)"
-            amontCart.layer.addAnimation(goodCountAnimation, forKey: nil)
+            amontCart.layer.add(goodCountAnimation, forKey: nil)
             
             // 购物车抖动
             let cartAnimation = CABasicAnimation(keyPath: "transform.translation.y")
@@ -283,10 +291,11 @@ extension AJToViewController  {
             cartAnimation.fromValue = -5
             cartAnimation.toValue = 5
             cartAnimation.autoreverses = true
-            cartBtn.layer.addAnimation(cartAnimation, forKey: nil)
+            cartBtn.layer.add(cartAnimation, forKey: nil)
         }
     }
 }
+
 
 
 

@@ -7,10 +7,11 @@
 //  自定义cell
 
 import UIKit
+import SnapKit
 
 protocol AJShoppingCellDelegate : NSObjectProtocol {
     
-    func shopping(shopping:AJShoppingCell ,button: UIButton ,label: UILabel)
+    func shopping(_ shopping:AJShoppingCell ,button: UIButton ,label: UILabel)
 //    func shoppingCalculate(CellBtn:UIButton)
     func shoppingCalculate()
 }
@@ -22,7 +23,7 @@ class AJShoppingCell: UITableViewCell {
     var addGoodArray : AJGoodModel? {
         didSet {
             //为当前子属性赋值
-            selectButton.selected = addGoodArray!.selected
+            selectButton.isSelected = addGoodArray!.selected
             
             amountLabel.text = "\(addGoodArray!.count)"
             
@@ -142,13 +143,13 @@ class AJShoppingCell: UITableViewCell {
     
     // MARK: - 按钮的点击事件
     //选择按钮的点击
-    @objc private func chooseClick(CellBtn: UIButton) {
+    @objc fileprivate func chooseClick(_ CellBtn: UIButton) {
         
-        print("1111:\(CellBtn.selected)--- \(!CellBtn.selected)")
-        CellBtn.selected  = !CellBtn.selected
+        print("1111:\(CellBtn.isSelected)--- \(!CellBtn.isSelected)")
+        CellBtn.isSelected  = !CellBtn.isSelected
 //        print("2222:\(CellBtn.selected)--- \(!CellBtn.selected)")
         
-        addGoodArray?.selected = CellBtn.selected
+        addGoodArray?.selected = CellBtn.isSelected
         
 // MARK: - 选择按钮的点击暂时有错误
         delegate?.shoppingCalculate()
@@ -156,7 +157,7 @@ class AJShoppingCell: UITableViewCell {
     }
     
     //商品数量按钮的点击
-    @objc private func subtractClick(btn: UIButton) {
+    @objc fileprivate func subtractClick(_ btn: UIButton) {
         
         delegate?.shopping(self, button: btn, label: amountLabel)
         
@@ -165,11 +166,11 @@ class AJShoppingCell: UITableViewCell {
     
     // MARK: - 数据懒加载
     ///选择按钮
-    private lazy var selectButton: UIButton = {
-       let selectButton = UIButton(type: UIButtonType.Custom)
-        selectButton.setImage(UIImage(named: "check_n"), forState: UIControlState.Normal)
-        selectButton.setImage(UIImage(named: "check_p"), forState: UIControlState.Selected)
-        selectButton.addTarget(self, action: "chooseClick:", forControlEvents: UIControlEvents.TouchUpInside)
+    fileprivate lazy var selectButton: UIButton = {
+       let selectButton = UIButton(type: UIButtonType.custom)
+        selectButton.setImage(UIImage(named: "check_n"), for: UIControlState())
+        selectButton.setImage(UIImage(named: "check_p"), for: UIControlState.selected)
+        selectButton.addTarget(self, action: "chooseClick:", for: UIControlEvents.touchUpInside)
         selectButton.sizeToFit()
         return selectButton
     }()
@@ -178,7 +179,7 @@ class AJShoppingCell: UITableViewCell {
     
     
     ///商品图片
-    private lazy var iconView: UIImageView = {
+    fileprivate lazy var iconView: UIImageView = {
         let iconView = UIImageView()
         //对图片进行裁剪
         iconView.layer.cornerRadius = 30
@@ -187,31 +188,31 @@ class AJShoppingCell: UITableViewCell {
     }()
     
     //商品的标题
-    private lazy var titleLabel: UILabel = {
+    fileprivate lazy var titleLabel: UILabel = {
         let title = UILabel()
         
         return title
     }()
     
     ///新价格的标签
-    private lazy var newPriceLabel: UILabel = {
+    fileprivate lazy var newPriceLabel: UILabel = {
         let newPriceLabel = UILabel()
-        newPriceLabel.textColor = UIColor.redColor()
+        newPriceLabel.textColor = UIColor.red
         return newPriceLabel
     }()
     
     ///商品旧价格标签  自定义Label
-    private lazy var  oldPriceLabel: AJPriceLabel = {
+    fileprivate lazy var  oldPriceLabel: AJPriceLabel = {
     
         let old = AJPriceLabel()
         
-        old.textColor = UIColor.grayColor()
+        old.textColor = UIColor.gray
         
         return old
     }()
     
     /// 加减操作的View
-    private lazy var addAndsubtraction: UIView = {
+    fileprivate lazy var addAndsubtraction: UIView = {
        let view = UIView()
         
         view.backgroundColor = UIColor(white: 0.9, alpha: 0.8)
@@ -219,31 +220,31 @@ class AJShoppingCell: UITableViewCell {
     }()
     
     /// 减号按钮
-    private lazy var subtractButton: UIButton = {
-        let btn = UIButton(type: UIButtonType.Custom)
+    fileprivate lazy var subtractButton: UIButton = {
+        let btn = UIButton(type: UIButtonType.custom)
         btn.tag = 10
-        btn.setBackgroundImage(UIImage(named: "jian_icon"), forState: UIControlState.Normal)
-        btn.addTarget(self, action: "subtractClick:", forControlEvents: UIControlEvents.TouchUpInside)
+        btn.setBackgroundImage(UIImage(named: "jian_icon"), for: UIControlState())
+        btn.addTarget(self, action: "subtractClick:", for: UIControlEvents.touchUpInside)
         return btn
     }()
     
     /// 加号按钮
-    private lazy var addButton: UIButton = {
-        let btn = UIButton(type: UIButtonType.Custom)
+    fileprivate lazy var addButton: UIButton = {
+        let btn = UIButton(type: UIButtonType.custom)
         
         btn.tag = 11
-        btn.setBackgroundImage(UIImage(named: "add_icon"), forState: UIControlState.Normal)
-        btn.addTarget(self, action: "subtractClick:", forControlEvents: UIControlEvents.TouchUpInside)
+        btn.setBackgroundImage(UIImage(named: "add_icon"), for: UIControlState())
+        btn.addTarget(self, action: "subtractClick:", for: UIControlEvents.touchUpInside)
         
         return btn
     }()
     
     ///商品显示的数量
-    private lazy var amountLabel: UILabel = {
+    fileprivate lazy var amountLabel: UILabel = {
        
         let label  = UILabel()
         //设置为剧中
-        label.textAlignment = NSTextAlignment.Center
+        label.textAlignment = NSTextAlignment.center
         return label
     }()
 
