@@ -45,7 +45,7 @@ class AJShoppingViewController: UIViewController {
     // MARK:- 设置UI
     func presentingUI() {
         title = "阿俊购物车"
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.plain, target: self, action: "clickBar")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "返回", style: UIBarButtonItemStyle.plain, target: self, action: Selector("clickBar"))
         view.backgroundColor = UIColor.white
         navigationItem.leftBarButtonItem?.tintColor = UIColor.orange
         showCartTableView.rowHeight = 80
@@ -74,26 +74,26 @@ class AJShoppingViewController: UIViewController {
     func layoutUI() {
         
         //约束子控件
-        showCartTableView.snp_makeConstraints { (make) -> Void in
+        showCartTableView.snp.makeConstraints { (make) -> Void in
             make.left.top.right.equalTo(0)
             make.bottom.equalTo(-49)
         }
         //底部选择条
-        bottomView.snp_makeConstraints { (make) -> Void in
+        bottomView.snp.makeConstraints { (make) -> Void in
             make.left.bottom.right.equalTo(0)
             make.height.equalTo(49)
         }
         
-        selectButton.snp_makeConstraints { (make) -> Void in
+        selectButton.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(12)
-            make.centerY.equalTo(bottomView.snp_centerY)
+            make.centerY.equalTo(bottomView.snp.centerY)
         }
         
-        totalPriceLabel.snp_makeConstraints { (make) -> Void in
-            make.center.equalTo(bottomView.snp_center)
+        totalPriceLabel.snp.makeConstraints { (make) -> Void in
+            make.center.equalTo(bottomView.snp.center)
         }
         
-        buyButton.snp_makeConstraints { (make) -> Void in
+        buyButton.snp.makeConstraints { (make) -> Void in
             make.right.equalTo(-12)
             make.top.equalTo(9)
             make.width.equalTo(88)
@@ -136,7 +136,7 @@ class AJShoppingViewController: UIViewController {
         selectButton.setTitle("多选\\反选", for: UIControlState())
         selectButton.setTitleColor(UIColor.gray, for: UIControlState())
         selectButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
-        selectButton.addTarget(self, action: "didSelectButton:", for: UIControlEvents.touchUpInside)
+        selectButton.addTarget(self, action: #selector(self.didSelectButton(_:)), for: UIControlEvents.touchUpInside)
         //默认是已经选择的状态
         selectButton.isSelected = true
         selectButton.sizeToFit()
@@ -148,7 +148,7 @@ class AJShoppingViewController: UIViewController {
     lazy var totalPriceLabel: UILabel = {
         let label = UILabel()
         let attributeText = NSMutableAttributedString(string: "总价格\(self.price)0")
-        attributeText.setAttributes([NSForegroundColorAttributeName:UIColor.red], range: NSMakeRange(5, attributeText.length - 5))
+        attributeText.setAttributes([NSAttributedStringKey.foregroundColor:UIColor.red], range: NSMakeRange(5, attributeText.length - 5))
         
         label.attributedText = attributeText
         label.sizeToFit()
@@ -254,7 +254,7 @@ extension AJShoppingViewController {
         //赋值价格
         let  attributeText = NSMutableAttributedString(string: "总共价格: \(self.price)0")
         
-            attributeText.setAttributes([NSForegroundColorAttributeName:UIColor.red], range: NSMakeRange(5, attributeText.length - 5))
+        attributeText.setAttributes([NSAttributedStringKey.foregroundColor:UIColor.red], range: NSMakeRange(5, attributeText.length - 5))
         totalPriceLabel.attributedText = attributeText
         
         //清空price
@@ -280,9 +280,3 @@ extension AJShoppingViewController {
         showCartTableView.reloadData()
     }
 }
-
-
-
-
-
-
