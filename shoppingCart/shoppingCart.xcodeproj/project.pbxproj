@@ -102,7 +102,6 @@
 			isa = PBXGroup;
 			children = (
 				6E608E101C2CEA22005E14A5 /* Controller */,
-				6E608E111C2CEA22005E14A5 /* Model */,
 				6E608E121C2CEA22005E14A5 /* View */,
 			);
 			name = "CartBuy(购买)";
@@ -115,13 +114,6 @@
 				6E26CAB01C2D4D21007F9A9A /* AJShoppingViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		6E608E111C2CEA22005E14A5 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		6E608E121C2CEA22005E14A5 /* View */ = {
@@ -137,7 +129,6 @@
 			isa = PBXGroup;
 			children = (
 				6E608E141C2CEA22005E14A5 /* Controller */,
-				6E608E151C2CEA22005E14A5 /* Model */,
 				6E608E161C2CEA22005E14A5 /* View */,
 			);
 			name = "CartTo(显示)";
@@ -150,13 +141,6 @@
 				6E608E171C2CEA7A005E14A5 /* AJToViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		6E608E151C2CEA22005E14A5 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		6E608E161C2CEA22005E14A5 /* View */ = {

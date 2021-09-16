@@ -37,15 +37,15 @@ class AJToViewController: UIViewController,CAAnimationDelegate {
         
         //初始化模型数组,制作一些假数据
         for i in 0..<10 {
-            var dict = [String :AnyObject]()
-            dict["iconName"] = "goodicon_\(i)" as AnyObject
-            dict["title"] = "\(i)commodity" as AnyObject
-            dict["desc"] = "这是第\(i)个商品" as AnyObject
-            dict["newPrice"] = "20\(i)" as AnyObject
-            dict["oldPrice"] = "30\(i)" as AnyObject
+            let model = AJGoodModel()
+            model.iconName = "goodicon_\(i)"
+            model.title = "\(i)commodity"
+            model.desc = "这是第\(i)个商品"
+            model.newPrice = "20\(i)"
+            model.oldPrice = "30\(i)"
             
             //将字典转模型并添加到数组中
-            goodArray.append(AJGoodModel(dict:dict))
+            goodArray.append(model)
         }
         
         //添加view
