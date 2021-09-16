@@ -22,64 +22,28 @@
 //  THE SOFTWARE.
 
 #if os(iOS) || os(tvOS)
-    import UIKit
+import UIKit
 #else
-    import AppKit
+import AppKit
 #endif
 
-
-public protocol ConstraintPriorityTarget {
-    
-    var constraintPriorityTargetValue: Float { get }
-    
-}
-
-extension Int: ConstraintPriorityTarget {
-    
-    public var constraintPriorityTargetValue: Float {
-        return Float(self)
-    }
-    
-}
-
-extension UInt: ConstraintPriorityTarget {
-    
-    public var constraintPriorityTargetValue: Float {
-        return Float(self)
-    }
-    
-}
-
-extension Float: ConstraintPriorityTarget {
-    
-    public var constraintPriorityTargetValue: Float {
-        return self
-    }
-    
-}
-
-extension Double: ConstraintPriorityTarget {
-    
-    public var constraintPriorityTargetValue: Float {
-        return Float(self)
-    }
-    
-}
-
-extension CGFloat: ConstraintPriorityTarget {
-    
-    public var constraintPriorityTargetValue: Float {
-        return Float(self)
-    }
-    
-}
-
 #if os(iOS) || os(tvOS)
-extension UILayoutPriority: ConstraintPriorityTarget {
+public protocol ConstraintDirectionalInsetTarget: ConstraintConstantTarget {
+}
 
-    public var constraintPriorityTargetValue: Float {
-        return self.rawValue
+@available(iOS 11.0, tvOS 11.0, *)
+extension ConstraintDirectionalInsets: ConstraintDirectionalInsetTarget {
+}
+
+extension ConstraintDirectionalInsetTarget {
+
+  @available(iOS 11.0, tvOS 11.0, *)
+  internal var constraintDirectionalInsetTargetValue: ConstraintDirectionalInsets {
+    if let amount = self as? ConstraintDirectionalInsets {
+      return amount
+    } else {
+      return ConstraintDirectionalInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
     }
-
+  }
 }
 #endif

@@ -85,7 +85,7 @@ class AJToViewController: UIViewController,CAAnimationDelegate {
         }
         amontCart.frame = CGRect(x: 0, y: 0, width: 40, height: 20)
         
-        amontCart.snp_makeConstraints { (make) -> Void in
+        amontCart.snp.makeConstraints { (make) -> Void in
             make.right.equalTo(-12)
             make.top.equalTo(10.5)
             make.width.equalTo(15)
@@ -141,7 +141,7 @@ class AJToViewController: UIViewController,CAAnimationDelegate {
         var btn = UIButton()
         
         btn.setImage(UIImage(named: "button_cart"), for: UIControlState())
-        btn.addTarget(self, action: "cartClick", for: UIControlEvents.touchUpInside)
+        btn.addTarget(self, action: #selector(self.cartClick), for: UIControlEvents.touchUpInside)
         btn.sizeToFit()
         
         return btn
@@ -295,14 +295,3 @@ extension AJToViewController  {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -71,26 +71,26 @@ class AJToTableViewCell: UITableViewCell {
         contentView.addSubview(addCarButton)
         
         //约束子控件
-        iconView.snp_makeConstraints { (make) -> Void in
+        iconView.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(12)
             make.top.equalTo(10)
             make.width.equalTo(60)
             make.height.equalTo(60)
         }
         
-        titleLabel.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(contentView.snp_top).offset(10)
-            make.left.equalTo(iconView.snp_right).offset(12)
+        titleLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(contentView.snp.top).offset(10)
+            make.left.equalTo(iconView.snp.right).offset(12)
             
         }
         
         
-        descLabel.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(titleLabel.snp_bottom).offset(12)
-            make.left.equalTo(iconView.snp_right).offset(12)
+        descLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(titleLabel.snp.bottom).offset(12)
+            make.left.equalTo(iconView.snp.right).offset(12)
         }
         
-        addCarButton.snp_makeConstraints { (make) -> Void in
+        addCarButton.snp.makeConstraints { (make) -> Void in
             make.right.equalTo(-12)
             make.top.equalTo(25)
             make.width.equalTo(80)
@@ -142,14 +142,7 @@ class AJToTableViewCell: UITableViewCell {
         addCarButton.setBackgroundImage(UIImage(named: "button_add_cart"), for: UIControlState())
         addCarButton.setTitle("购买", for: UIControlState())
         //按钮的点击事件
-        addCarButton.addTarget(self, action: "addCarButtonClick:", for: UIControlEvents.touchUpInside)
+        addCarButton.addTarget(self, action: #selector(self.addCarButtonClick(_:)), for: UIControlEvents.touchUpInside)
         return addCarButton
     }()
-
-    
-    
-    
-    
-    
-    
 }

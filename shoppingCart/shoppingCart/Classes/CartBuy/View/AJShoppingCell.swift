@@ -82,55 +82,55 @@ class AJShoppingCell: UITableViewCell {
         
         
         //约束子控件
-        selectButton.snp_makeConstraints { (make) -> Void in
+        selectButton.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(12)
-            make.centerY.equalTo(contentView.snp_centerY)
+            make.centerY.equalTo(contentView.snp.centerY)
         }
         
-        iconView.snp_makeConstraints { (make) -> Void in
+        iconView.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(42)
             make.top.equalTo(10)
             make.width.equalTo(60)
             make.height.equalTo(60)
         }
         
-        titleLabel.snp_makeConstraints { (make) -> Void in
-            make.left.equalTo(iconView.snp_right).offset(10)
-            make.top.equalTo(contentView.snp_top).offset(12)
+        titleLabel.snp.makeConstraints { (make) -> Void in
+            make.left.equalTo(iconView.snp.right).offset(10)
+            make.top.equalTo(contentView.snp.top).offset(12)
         }
         
-        newPriceLabel.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(titleLabel.snp_top).offset(5)
+        newPriceLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(titleLabel.snp.top).offset(5)
             make.right.equalTo(-12)
         }
         
-        oldPriceLabel.snp_makeConstraints { (make) -> Void in
-            make.top.equalTo(newPriceLabel.snp_bottom).offset(5)
+        oldPriceLabel.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(newPriceLabel.snp.bottom).offset(5)
             make.right.equalTo(-12)
         }
         
-        addAndsubtraction.snp_makeConstraints { (make) -> Void in
+        addAndsubtraction.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(120)
             make.top.equalTo(40)
             make.width.equalTo(100)
             make.height.equalTo(30)
         }
         
-        subtractButton.snp_makeConstraints { (make) -> Void in
+        subtractButton.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(0)
             make.top.equalTo(0)
             make.width.equalTo(30)
             make.height.equalTo(30)
         }
         
-        amountLabel.snp_makeConstraints { (make) -> Void in
+        amountLabel.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(30)
             make.top.equalTo(0)
             make.width.equalTo(40)
             make.height.equalTo(30)
         }
         
-        addButton.snp_makeConstraints { (make) -> Void in
+        addButton.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(70)
             make.top.equalTo(0)
             make.width.equalTo(30)
@@ -170,7 +170,7 @@ class AJShoppingCell: UITableViewCell {
        let selectButton = UIButton(type: UIButtonType.custom)
         selectButton.setImage(UIImage(named: "check_n"), for: UIControlState())
         selectButton.setImage(UIImage(named: "check_p"), for: UIControlState.selected)
-        selectButton.addTarget(self, action: "chooseClick:", for: UIControlEvents.touchUpInside)
+        selectButton.addTarget(self, action: #selector(self.chooseClick(_:)), for: UIControlEvents.touchUpInside)
         selectButton.sizeToFit()
         return selectButton
     }()
@@ -224,7 +224,7 @@ class AJShoppingCell: UITableViewCell {
         let btn = UIButton(type: UIButtonType.custom)
         btn.tag = 10
         btn.setBackgroundImage(UIImage(named: "jian_icon"), for: UIControlState())
-        btn.addTarget(self, action: "subtractClick:", for: UIControlEvents.touchUpInside)
+        btn.addTarget(self, action: #selector(self.subtractClick(_:)), for: UIControlEvents.touchUpInside)
         return btn
     }()
     
@@ -234,7 +234,7 @@ class AJShoppingCell: UITableViewCell {
         
         btn.tag = 11
         btn.setBackgroundImage(UIImage(named: "add_icon"), for: UIControlState())
-        btn.addTarget(self, action: "subtractClick:", for: UIControlEvents.touchUpInside)
+        btn.addTarget(self, action: #selector(self.subtractClick(_:)), for: UIControlEvents.touchUpInside)
         
         return btn
     }()

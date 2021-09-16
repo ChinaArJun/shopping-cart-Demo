@@ -39,10 +39,10 @@ public protocol ConstraintDSL {
 extension ConstraintDSL {
     
     public func setLabel(_ value: String?) {
-        objc_setAssociatedObject(self.target, &labelKey, value, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        objc_setAssociatedObject(self.target as Any, &labelKey, value, .OBJC_ASSOCIATION_COPY_NONATOMIC)
     }
     public func label() -> String? {
-        return objc_getAssociatedObject(self.target, &labelKey) as? String
+        return objc_getAssociatedObject(self.target as Any, &labelKey) as? String
     }
     
 }
@@ -99,6 +99,10 @@ extension ConstraintBasicAttributesDSL {
         return ConstraintItem(target: self.target, attributes: ConstraintAttributes.edges)
     }
     
+    public var directionalEdges: ConstraintItem {
+      return ConstraintItem(target: self.target, attributes: ConstraintAttributes.directionalEdges)
+    }
+
     public var size: ConstraintItem {
         return ConstraintItem(target: self.target, attributes: ConstraintAttributes.size)
     }
@@ -115,7 +119,7 @@ extension ConstraintAttributesDSL {
     
     // MARK: Baselines
     
-    @available(*, deprecated:3.0, message:"Use .lastBaseline instead")
+    @available(*, deprecated, message:"Use .lastBaseline instead")
     public var baseline: ConstraintItem {
         return ConstraintItem(target: self.target, attributes: ConstraintAttributes.lastBaseline)
     }
@@ -177,6 +181,11 @@ extension ConstraintAttributesDSL {
         return ConstraintItem(target: self.target, attributes: ConstraintAttributes.margins)
     }
     
+    @available(iOS 8.0, *)
+    public var directionalMargins: ConstraintItem {
+      return ConstraintItem(target: self.target, attributes: ConstraintAttributes.directionalMargins)
+    }
+
     @available(iOS 8.0, *)
     public var centerWithinMargins: ConstraintItem {
         return ConstraintItem(target: self.target, attributes: ConstraintAttributes.centerWithinMargins)
